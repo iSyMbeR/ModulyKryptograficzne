@@ -16,6 +16,12 @@ public class Cryptography {
 
         char[][] a = new char[key][column];
 
+
+        for (int i = 0; i < key; i++) {
+            for (int j = 0; j < column; j++)
+                a[i][j] = '#';
+        }
+
         for (int i = 0; i < column; i++) {
             if (currentRow == 0 || currentRow == key - 1) {
                 direction = !direction;
@@ -29,7 +35,7 @@ public class Cryptography {
         //filling encryptedText
         for (int i = 0; i < key; i++) {
             for (int j = 0; j < column; j++) {
-                if (a[i][j] != '\0')
+                if (a[i][j] != '#')
                     encryptedText += a[i][j];
             }
         }
@@ -79,12 +85,40 @@ public class Cryptography {
         for (int i = 0; i < column; i++) {
             for (int j = 0; j < key; j++) {
                 if (currentRow == 0 || currentRow == key - 1) direction = !direction;
-                    decryptedText += a[j][i];
+                decryptedText += a[j][i];
                 if (direction) currentRow++;
                 else currentRow--;
             }
         }
         return decryptedText;
     }
+
+    public void przestawienieMacierzowe2a(String text, int[] key) {
+        encryptedText = "";
+        double column = key.length;
+        double row = Math.ceil(text.length() / column);
+
+        char[][] a = new char[(int) row][(int) column];
+        int index = 0;
+
+        //filling & display
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                if (index < text.length())
+                    a[i][j] = text.charAt(index++);
+                System.out.print(a[i][j]);
+            }
+            System.out.println();
+        }
+
+        for (int i = 0; i < row; i++) {
+            for (int k : key) {
+                encryptedText += a[i][k-1];
+            }
+        }
+        System.out.println(encryptedText);
+    }
+
+
 }
 
