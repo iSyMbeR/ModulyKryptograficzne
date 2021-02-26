@@ -4,12 +4,10 @@ public class Main {
     public static void main(String[] args) {
         Cryptography cryptography = new Cryptography();
 
-        String text = "CRYPTOGRAPHY";
-        int key = 3;
-        int[] key2 = {3,4,1,5,2};
-  /*      String encryption = cryptography.railFenceEncryption(text, key);
-        System.out.println(encryption);
-        System.out.println(cryptography.railFenceDecryption(encryption, key));*/
-        cryptography.przestawienieMacierzowe2a("CRYPTOGRAPHYOSA", key2);
+        String text = "CRYPTOGRAPHYOSA";
+        String key = "3-4-1-2";
+
+        String encryptedWord = cryptography.przestawienieMacierzowe2aEncryption(text, key);
+        System.out.println(cryptography.przestawienieMacierzowe2aDecryption(encryptedWord, key));
     }
 }
