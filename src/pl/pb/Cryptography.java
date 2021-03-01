@@ -2,6 +2,7 @@ package pl.pb;
 
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class Cryptography {
     private String encryptedText = "";
@@ -132,7 +133,6 @@ public class Cryptography {
     }
 
     public String przestawienieMacierzowe2aDecryption(String text, String key) {
-        decryptedText = "";
 
         String[] tmpKey = key.split("-");
         int[] intKey = new int[tmpKey.length];
@@ -140,13 +140,6 @@ public class Cryptography {
         for (int i = 0; i < tmpKey.length; i++) {
             intKey[i] = Integer.parseInt(String.valueOf(tmpKey[i].charAt(0)));
         }
-
-//        //reverse array
-//        for (int i = 0; i < intKey.length / 2; i++) {
-//            int temp = intKey[i];
-//            intKey[i] = intKey[intKey.length - 1 - i];
-//            intKey[intKey.length - 1 - i] = temp;
-//        }
 
         double column = intKey.length;
         double row = Math.ceil(text.length() / column);
@@ -162,8 +155,6 @@ public class Cryptography {
             System.out.println();
         }
         System.out.println();
-
-
 
         for (int i = 0; i < row; i++) {
             index = 0;
@@ -183,12 +174,113 @@ public class Cryptography {
                     }
                     k = 0;
                 }
-
             }
         }
-        System.out.println(decryptedText);
         return decryptedText;
     }
 
-}
+    public String przestawienieMacierzowe2bEncryption(String text, String key) {
+        encryptedText = "";
+        StringBuilder stringBuilder = new StringBuilder();
+        double column = key.length();
+        double row = Math.ceil(text.length() / column);
+        char[][] textCharArray = new char[(int) row][(int) column];
+        char[] keyCharArray = new char[key.length()];
+        char[] sortedKeyCharArray;
 
+        for (int i = 0; i < keyCharArray.length; i++) {
+            keyCharArray[i] = key.charAt(i);
+        }
+
+        sortedKeyCharArray = keyCharArray.clone();
+        Arrays.sort(sortedKeyCharArray);
+
+        int index = 0;
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                if (index < text.length()) {
+                    textCharArray[i][j] = text.charAt(index++);
+                    System.out.print(textCharArray[i][j]);
+                }
+
+            }
+            System.out.println();
+        }
+        System.out.println();
+        int[] arrayOfIndexes = new int[keyCharArray.length];
+        char[] tmpKeyCharArray;
+        tmpKeyCharArray = keyCharArray.clone();
+        // zapisuje kolejnosc indexow
+        for (int i = 0; i < keyCharArray.length; i++) {
+            for (int j = 0; j < sortedKeyCharArray.length; j++) {
+                if (sortedKeyCharArray[i] == tmpKeyCharArray[j]) {
+                    tmpKeyCharArray[j] = 0;
+                    arrayOfIndexes[i] = j;
+                    break;
+                }
+            }
+        }
+
+        for (int i = 0; i < column; i++) {
+            index = arrayOfIndexes[i];
+            for (int j = 0; j < row; j++) {
+                stringBuilder.append(textCharArray[j][index]);
+            }
+            encryptedText = String.valueOf(stringBuilder);
+        }
+        return encryptedText;
+    }
+
+    public String przestawienieMacierzowe2bDecryption(String text, String key) {
+        decryptedText = "";
+        StringBuilder stringBuilder = new StringBuilder();
+        double column = key.length();
+        double row = Math.ceil(text.length() / column);
+        char[][] textCharArray = new char[(int) row][(int) column];
+        char[] keyCharArray = new char[key.length()];
+        char[] sortedKeyCharArray;
+
+
+        for (int i = 0; i < keyCharArray.length; i++) {
+            keyCharArray[i] = key.charAt(i);
+        }
+
+        sortedKeyCharArray = keyCharArray.clone();
+        Arrays.sort(sortedKeyCharArray);
+
+
+
+        int[] arrayOfIndexes = new int[keyCharArray.length];
+        char[] tmpKeyCharArray;
+        tmpKeyCharArray = keyCharArray.clone();
+        // zapisuje kolejnosc indexow
+        for (int i = 0; i < keyCharArray.length; i++) {
+            for (int j = 0; j < sortedKeyCharArray.length; j++) {
+                if (sortedKeyCharArray[i] == tmpKeyCharArray[j]) {
+                    tmpKeyCharArray[j] = 0;
+                    arrayOfIndexes[i] = j;
+                    break;
+                }
+            }
+        }
+
+        int index = 0;
+        int index2 = 0;
+        for (int i = 0; i < column; i++) {
+            for (int j = 0; j < row; j++) {
+
+                textCharArray[j][arrayOfIndexes[index]] = text.charAt(index2++);
+            }
+            index++;
+        }
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                stringBuilder.append(textCharArray[i][j]);
+            }
+        }
+
+        decryptedText = String.valueOf(stringBuilder);
+        return decryptedText;
+    }
+}
