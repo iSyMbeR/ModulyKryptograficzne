@@ -228,6 +228,10 @@ public class Cryptography {
             }
             encryptedText = String.valueOf(stringBuilder);
         }
+        for (int i = 0; i < arrayOfIndexes.length; i++) {
+            System.out.println(arrayOfIndexes[i]);
+        }
+
         return encryptedText;
     }
 
@@ -240,16 +244,17 @@ public class Cryptography {
         char[] keyCharArray = new char[key.length()];
         char[] sortedKeyCharArray;
 
-
+        //string -> char
         for (int i = 0; i < keyCharArray.length; i++) {
             keyCharArray[i] = key.charAt(i);
         }
-
+        //sklonowanie tablicy charow
         sortedKeyCharArray = keyCharArray.clone();
+        //sortowanie liter
         Arrays.sort(sortedKeyCharArray);
 
 
-
+        //tablica przechowujaca indexy pokolei posorotowanych liter
         int[] arrayOfIndexes = new int[keyCharArray.length];
         char[] tmpKeyCharArray;
         tmpKeyCharArray = keyCharArray.clone();
@@ -268,7 +273,6 @@ public class Cryptography {
         int index2 = 0;
         for (int i = 0; i < column; i++) {
             for (int j = 0; j < row; j++) {
-
                 textCharArray[j][arrayOfIndexes[index]] = text.charAt(index2++);
             }
             index++;
@@ -283,4 +287,136 @@ public class Cryptography {
         decryptedText = String.valueOf(stringBuilder);
         return decryptedText;
     }
+
+    public String przestawienieMacierzowe2cEncryption(String text, String key) {
+        encryptedText = "";
+        StringBuilder stringBuilder = new StringBuilder();
+        double column = key.length();
+        double row = column;
+        char[][] textCharArray = new char[(int) row][(int) column];
+        char[] keyCharArray = new char[key.length()];
+        char[] sortedKeyCharArray;
+
+        if (ciag(key.length()) < text.length()) {
+            return "Klucz ktory podales jest za krotki, lub tekst ktory podales jest za dlugi";
+        }
+        for (int i = 0; i < keyCharArray.length; i++) {
+            keyCharArray[i] = key.charAt(i);
+        }
+
+        sortedKeyCharArray = keyCharArray.clone();
+        Arrays.sort(sortedKeyCharArray);
+
+
+        int[] arrayOfIndexes = new int[keyCharArray.length];
+        char[] tmpKeyCharArray;
+        tmpKeyCharArray = keyCharArray.clone();
+        // zapisuje kolejnosc indexow
+        for (int i = 0; i < keyCharArray.length; i++) {
+            for (int j = 0; j < sortedKeyCharArray.length; j++) {
+                if (sortedKeyCharArray[i] == tmpKeyCharArray[j]) {
+                    tmpKeyCharArray[j] = 0;
+                    arrayOfIndexes[i] = j;
+                    break;
+                }
+            }
+        }
+        //sprawdza czy tablica nie ma wiecej liter niz text
+        int textSizeCounter = 0;
+        boolean textSizeChecker = false;
+        int index = 0;
+        for (int i = 0; i < column; i++) {
+            if (textSizeChecker) {
+                break;
+            }
+            for (int j = 0; j <= arrayOfIndexes[i]; j++) {
+                if (index < text.length()) {
+                    if (textSizeCounter >= text.length()) {
+                        textSizeChecker = true;
+                        break;
+                    }
+                    textCharArray[i][j] = text.charAt(index++);
+                    System.out.print(textCharArray[i][j]);
+                    textSizeCounter++;
+                }
+
+            }
+            System.out.println();
+        }
+
+        for (int i = 0; i < column; i++) {
+            index = arrayOfIndexes[i];
+            for (int j = 0; j < row; j++) {
+                stringBuilder.append(textCharArray[j][index]);
+            }
+            encryptedText = String.valueOf(stringBuilder);
+        }
+
+        return encryptedText;
+
+    }
+
+    public String przestawienieMacierzowe2cDecryption(String text, String key) {
+        decryptedText = "";
+        StringBuilder stringBuilder = new StringBuilder();
+        double column = key.length();
+        double row = column;
+        char[][] textCharArray = new char[(int) row][(int) column];
+        char[] keyCharArray = new char[key.length()];
+        char[] sortedKeyCharArray;
+        if (encryptedText.equals("")) {
+            return "brak textu";
+        }
+        //string -> char
+        for (int i = 0; i < keyCharArray.length; i++) {
+            keyCharArray[i] = key.charAt(i);
+        }
+        //sklonowanie tablicy charow
+        sortedKeyCharArray = keyCharArray.clone();
+        //sortowanie liter
+        Arrays.sort(sortedKeyCharArray);
+
+
+        //tablica przechowujaca indexy pokolei posorotowanych liter
+        int[] arrayOfIndexes = new int[keyCharArray.length];
+        char[] tmpKeyCharArray;
+        tmpKeyCharArray = keyCharArray.clone();
+        // zapisuje kolejnosc indexow
+        for (int i = 0; i < keyCharArray.length; i++) {
+            for (int j = 0; j < sortedKeyCharArray.length; j++) {
+                if (sortedKeyCharArray[i] == tmpKeyCharArray[j]) {
+                    tmpKeyCharArray[j] = 0;
+                    arrayOfIndexes[i] = j;
+                    break;
+                }
+            }
+        }
+
+        int index = 0;
+        int index2 = 0;
+        for (int i = 0; i < column; i++) {
+            for (int j = 0; j < row; j++) {
+                textCharArray[j][arrayOfIndexes[index]] = text.charAt(index2++);
+            }
+            index++;
+        }
+
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                stringBuilder.append(textCharArray[i][j]);
+            }
+        }
+
+        decryptedText = String.valueOf(stringBuilder);
+        return decryptedText;
+    }
+
+    long ciag(int n) {
+        long suma = 0;
+        for (int i = 1; i < n + 1; i++) {
+            suma += i;
+        }
+        return suma;
+    }
 }
+
