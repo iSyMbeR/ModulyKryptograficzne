@@ -57,7 +57,6 @@ public class Cryptography {
 
     public String railFenceDecryption(String text, int key) {
         decryptedText = "";
-        System.out.println(text.length());
         boolean direction = false;
         int currentRow = 0;
         int column = text.length();
@@ -117,18 +116,17 @@ public class Cryptography {
             for (int j = 0; j < column; j++) {
                 if (index < text.length())
                     a[i][j] = text.charAt(index++);
-                System.out.print(a[i][j]);
+                //System.out.print(a[i][j]);
+
             }
-            System.out.println();
+            //System.out.println();
         }
-        System.out.println();
 
         for (int i = 0; i < row; i++) {
             for (int k : intKey) {
                 encryptedText += a[i][k - 1];
             }
         }
-        System.out.println(encryptedText);
         return encryptedText;
     }
 
@@ -152,9 +150,9 @@ public class Cryptography {
                 if (index < text.length())
                     a[i][j] = text.charAt(index++);
             }
-            System.out.println();
+            //System.out.println();
         }
-        System.out.println();
+       // System.out.println();
 
         for (int i = 0; i < row; i++) {
             index = 0;
@@ -200,11 +198,11 @@ public class Cryptography {
             for (int j = 0; j < column; j++) {
                 if (index < text.length()) {
                     textCharArray[i][j] = text.charAt(index++);
-                    System.out.print(textCharArray[i][j]);
+                   // System.out.print(textCharArray[i][j]);
                 }
 
             }
-            System.out.println();
+            //System.out.println();
         }
         System.out.println();
         int[] arrayOfIndexes = new int[keyCharArray.length];
@@ -227,9 +225,6 @@ public class Cryptography {
                 stringBuilder.append(textCharArray[j][index]);
             }
             encryptedText = String.valueOf(stringBuilder);
-        }
-        for (int i = 0; i < arrayOfIndexes.length; i++) {
-            System.out.println(arrayOfIndexes[i]);
         }
 
         return encryptedText;
@@ -336,12 +331,12 @@ public class Cryptography {
                         break;
                     }
                     textCharArray[i][j] = text.charAt(index++);
-                    System.out.print(textCharArray[i][j]);
+                   // System.out.print(textCharArray[i][j]);
                     textSizeCounter++;
                 }
 
             }
-            System.out.println();
+            //System.out.println();
         }
 
         for (int i = 0; i < column; i++) {
@@ -408,6 +403,60 @@ public class Cryptography {
         }
 
         decryptedText = String.valueOf(stringBuilder);
+        return decryptedText;
+    }
+
+
+    public String vigenereEncryption(String text, String key) {
+        encryptedText = "";
+        StringBuilder stringBuilder = new StringBuilder();
+        text = text.toUpperCase();
+        key = key.toUpperCase();
+        int tmpText;
+        int tmpKey;
+        int tmpAnswer = 0;
+        char answerCharAscii;
+        for (int i = 0; i < text.length(); i++) {
+            tmpText = text.charAt(i) - 64;
+            tmpKey = key.charAt(i) - 64;
+            tmpAnswer = tmpKey + tmpText - 1;
+
+            if (tmpAnswer > 26) {
+                answerCharAscii = (char) ((tmpAnswer % 26) + 64);
+            } else {
+                answerCharAscii = (char) (tmpAnswer + 64);
+            }
+            stringBuilder.append(answerCharAscii);
+        }
+        encryptedText = stringBuilder.toString();
+        return encryptedText;
+    }
+
+    public String vigenereDecryption(String text, String key) {
+        encryptedText = "";
+        StringBuilder stringBuilder = new StringBuilder();
+        text = text.toUpperCase();
+        key = key.toUpperCase();
+        int tmpText;
+        int tmpKey;
+        int tmpAnswer = 0;
+        char answerCharAscii;
+        for (int i = 0; i < text.length(); i++) {
+            tmpText = text.charAt(i) - 64;
+            tmpKey = key.charAt(i) - 64;
+            tmpAnswer = tmpText - tmpKey + 1;
+
+            if (tmpAnswer < 0) {
+                tmpAnswer = 26 + tmpAnswer;
+            }
+            if (tmpAnswer > 26) {
+                answerCharAscii = (char) ((tmpAnswer % 26) + 64);
+            } else {
+                answerCharAscii = (char) (tmpAnswer + 64);
+            }
+            stringBuilder.append(answerCharAscii);
+        }
+        decryptedText = stringBuilder.toString();
         return decryptedText;
     }
 
