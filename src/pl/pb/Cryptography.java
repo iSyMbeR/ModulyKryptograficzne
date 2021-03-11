@@ -128,7 +128,7 @@ public class Cryptography {
     }
 
     public String przestawienieMacierzowe2aDecryption(String text, String key) {
-
+        decryptedText="";
         String[] tmpKey = key.split("-");
         int[] intKey = new int[tmpKey.length];
 
@@ -154,11 +154,11 @@ public class Cryptography {
         for (int i = 0; i < row; i++) {
             index = 0;
             for (int k = 0; k < intKey.length; k++) {
+                //jak mamy klucz key=3-1-4-2 to to wczytuje od indexu tam gdzie sie znajduje 1 czyli 1 potem 2 czyli 3
                 if (intKey[k] - 1 == index) {
                     decryptedText += a[i][k];
                     index++;
                     if (k == intKey.length - 1) {
-
                         for (int x = 0; x < intKey.length; x++) {
                             if (intKey[x] - 1 == index) {
                                 decryptedText += a[i][x];
