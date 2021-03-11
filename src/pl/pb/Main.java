@@ -10,10 +10,10 @@ public class Main {
         String decryptedText;
 
         // Zad 1. Zaimplementuj algorytm kodujacy i dekodujacy z wykorzystaniem szyfru prostego przestawiania „rail fence" dla k = n. Skorzystaj z przykładu 1 (1 punkt).
-        text = "CRYPTOGRAPHY";
+        text = "POLITECHNIKA";
         intKey = 3;
 
-        System.out.println("\u001B[32m" + "Zad 1. Przestawienia macierzowe 2a\nText: " + text + "\nKey: " + intKey + "\u001B[0m");
+        System.out.println("\u001B[32m" + "Zad 1. RailFence\nText: " + text + "\nKey: " + intKey + "\u001B[0m");
         encryptedText = cryptography.railFenceEncryption(text, intKey);
         decryptedText = cryptography.railFenceDecryption(encryptedText, intKey);
         System.out.println("Text '" + text + "' po zaszyfrowaniu wyglada tak : " + encryptedText);
@@ -22,7 +22,7 @@ public class Main {
 
 
         // Zad 2. Zaimplementuj kryptosystem przedstawieniowy bazujacy na przykładzie 2a dla d = 5 oraz klucza key = 3-4-1-5-2 (1 punkt).
-        text = "CRYPTOGRAPHYOSA";
+        text = "POLITECHNIKA";
         key = "3-4-1-5-2";
 
         System.out.println("\u001B[32m" + "Zad 2.Przestawienia macierzowe 2a\nText: " + text + "\nKey: " + key + "\u001B[0m");
@@ -34,10 +34,10 @@ public class Main {
 
 
         // Zad 3. Zaimplementuj kryptosystem przedstawieniowy bazuj ˛acy na przykładzie 2b (1 punkt)
-        text = "HEREISASECRETMESSAGEENCIPHEREDBYTRANSPOSITION";
-        key = "CONVENIENCE";
+        text = "POLITECHNIKA";
+        key = "DZIEKAN";
 
-        System.out.println("\u001B[32m" + "Zad 3. Przestawienia macierzowe 2b\nText: " + text + "\nKey: " + key + "\u001B[0m");
+        System.out.println("\u001B[32m" + "Zad 2. Przestawienia macierzowe 2b\nText: " + text + "\nKey: " + key + "\u001B[0m");
         encryptedText = cryptography.przestawienieMacierzowe2bEncryption(text, key);
         decryptedText = cryptography.przestawienieMacierzowe2bDecryption(encryptedText, key);
         System.out.println("Text '" + text + "' po zaszyfrowaniu wyglada tak : " + encryptedText);
@@ -46,21 +46,32 @@ public class Main {
 
 
         // oraz 2c (2 punkty) dla dowolnego klucza
-        text = "HEREISASECRETMESSAGEENCIPHEREDBYTRANSPOSITION";
-        key = "TRYTYTKAPOWER";
+        text = "POLITECHNIKA";
+        key = "DZIEKAN";
 
-        System.out.println("\u001B[32m" + "Zad 3b. Przestawienia macierzowe 2c\nText: " + text + "\nKey: " + key + "\u001B[0m");
+        System.out.println("\u001B[32m" + "Zad 3. Przestawienia macierzowe 2c\nText: " + text + "\nKey: " + key + "\u001B[0m");
         encryptedText = cryptography.przestawienieMacierzowe2cEncryption(text, key);
         decryptedText = cryptography.przestawienieMacierzowe2cDecryption(encryptedText, key);
         System.out.println("Text '" + text + "' po zaszyfrowaniu wyglada tak : " + encryptedText);
         System.out.println("\nText '" + encryptedText + "' po odszyfrowaniu wyglada tak : " + decryptedText);
         System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
 
+        //Zad 4. Cezar
+        text = "CRYPTOGRAPHY";
+        intKey = 3;
+
+        System.out.println("\u001B[32m" + "3a. Szyfrowanie cezara (Caesar cipher)\nText: " + text + "\nKey: " + intKey + "\u001B[0m");
+        encryptedText = cryptography.caesarEncryption(text, intKey);
+        //decryptedText = cryptography.przestawienieMacierzowe2cDecryption(encryptedText, key);
+        System.out.println("Text '" + text + "' po zaszyfrowaniu wyglada tak : " + encryptedText);
+        System.out.println("\nText '" + encryptedText + "' po odszyfrowaniu wyglada tak : " + decryptedText);
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
+
 
         // Zad 5. Zaimplementuj kryptosystem bazuj ˛acy na tablicy Vigenere’a (1 punkt).
-        text = "CRYPTOGRAPHY";
-        key = "BREAKBREAKBR";
-        System.out.println("\u001B[32m" + "Zad 5. Przestawienia macierzowe 2c\nText: " + text + "\nKey: " + key + "\u001B[0m");
+        text = "POLITECHNIKA";
+        key = "DZIEKAN";
+        System.out.println("\u001B[32m" + "4. Szyfrowanie Vigenere’a\nText: " + text + "\nKey: " + key + "\u001B[0m");
         encryptedText = cryptography.vigenereEncryption(text, key);
         decryptedText = cryptography.vigenereDecryption(encryptedText, key);
         System.out.println("Text '" + text + "' po zaszyfrowaniu wyglada tak : EK(M) = " + encryptedText);
