@@ -16,10 +16,7 @@ public class Cryptography {
         boolean direction = false;
         int currentRow = 0;
         int column = text.length();
-
-
         char[][] a = new char[key][column];
-
 
         for (int i = 0; i < key; i++) {
             for (int j = 0; j < column; j++)
@@ -45,12 +42,12 @@ public class Cryptography {
         }
 
         //display matrix
-        for (int i = 0; i < key; i++) {
-            for (int j = 0; j < column; j++) {
-                System.out.print(a[i][j] + " ");
-            }
-            System.out.println();
-        }
+//        for (int i = 0; i < key; i++) {
+//            for (int j = 0; j < column; j++) {
+//                System.out.print(a[i][j] + " ");
+//            }
+//            System.out.println();
+//        }
 
         return encryptedText;
     }
@@ -152,7 +149,7 @@ public class Cryptography {
             }
             //System.out.println();
         }
-       // System.out.println();
+        // System.out.println();
 
         for (int i = 0; i < row; i++) {
             index = 0;
@@ -198,7 +195,7 @@ public class Cryptography {
             for (int j = 0; j < column; j++) {
                 if (index < text.length()) {
                     textCharArray[i][j] = text.charAt(index++);
-                   // System.out.print(textCharArray[i][j]);
+                    // System.out.print(textCharArray[i][j]);
                 }
 
             }
@@ -302,7 +299,6 @@ public class Cryptography {
         sortedKeyCharArray = keyCharArray.clone();
         Arrays.sort(sortedKeyCharArray);
 
-
         int[] arrayOfIndexes = new int[keyCharArray.length];
         char[] tmpKeyCharArray;
         tmpKeyCharArray = keyCharArray.clone();
@@ -331,7 +327,7 @@ public class Cryptography {
                         break;
                     }
                     textCharArray[i][j] = text.charAt(index++);
-                   // System.out.print(textCharArray[i][j]);
+                    // System.out.print(textCharArray[i][j]);
                     textSizeCounter++;
                 }
 
@@ -344,9 +340,8 @@ public class Cryptography {
             for (int j = 0; j < row; j++) {
                 stringBuilder.append(textCharArray[j][index]);
             }
-            encryptedText = String.valueOf(stringBuilder);
         }
-
+        encryptedText = String.valueOf(stringBuilder);
         return encryptedText;
 
     }
@@ -386,7 +381,6 @@ public class Cryptography {
                 }
             }
         }
-
         int index = 0;
         int index2 = 0;
         for (int i = 0; i < column; i++) {
@@ -408,56 +402,30 @@ public class Cryptography {
 
 
     public String vigenereEncryption(String text, String key) {
-        encryptedText = "";
-        StringBuilder stringBuilder = new StringBuilder();
+        //sprawdzam czy text jawny jest dluzszy od klucza, jezeli tak to duplikuje klucz
+        key = keyDuplicator(text, key).toUpperCase();
         text = text.toUpperCase();
-        key = key.toUpperCase();
-        int tmpText;
-        int tmpKey;
-        int tmpAnswer = 0;
-        char answerCharAscii;
-        for (int i = 0; i < text.length(); i++) {
-            tmpText = text.charAt(i) - 64;
-            tmpKey = key.charAt(i) - 64;
-            tmpAnswer = tmpKey + tmpText - 1;
+        int firstLetter = 65;
 
-            if (tmpAnswer > 26) {
-                answerCharAscii = (char) ((tmpAnswer % 26) + 64);
-            } else {
-                answerCharAscii = (char) (tmpAnswer + 64);
-            }
-            stringBuilder.append(answerCharAscii);
+        StringBuilder encryptedTextBuilder = new StringBuilder();
+        for (int i = 0; i < text.length(); i++) {
+            encryptedTextBuilder.append((char)(firstLetter + ((text.charAt(i)) + key.charAt(i)) % 26));
         }
-        encryptedText = stringBuilder.toString();
-        return encryptedText;
+        return encryptedTextBuilder.toString();
     }
 
     public String vigenereDecryption(String text, String key) {
-        encryptedText = "";
-        StringBuilder stringBuilder = new StringBuilder();
+        //sprawdzam czy text jawny jest dluzszy od klucza, jezeli tak to duplikuje klucz
+        key = keyDuplicator(text, key).toUpperCase();
         text = text.toUpperCase();
-        key = key.toUpperCase();
-        int tmpText;
-        int tmpKey;
-        int tmpAnswer = 0;
-        char answerCharAscii;
-        for (int i = 0; i < text.length(); i++) {
-            tmpText = text.charAt(i) - 64;
-            tmpKey = key.charAt(i) - 64;
-            tmpAnswer = tmpText - tmpKey + 1;
+        int firstLetter = 65;
 
-            if (tmpAnswer < 0) {
-                tmpAnswer = 26 + tmpAnswer;
-            }
-            if (tmpAnswer > 26) {
-                answerCharAscii = (char) ((tmpAnswer % 26) + 64);
-            } else {
-                answerCharAscii = (char) (tmpAnswer + 64);
-            }
-            stringBuilder.append(answerCharAscii);
+        StringBuilder encryptedTextBuilder = new StringBuilder();
+        for (int i = 0; i < text.length(); i++) {
+            encryptedTextBuilder.append((char)(firstLetter + ((text.charAt(i)) - key.charAt(i) + 26) % 26));
         }
-        decryptedText = stringBuilder.toString();
-        return decryptedText;
+
+        return encryptedTextBuilder.toString();
     }
 
     long ciag(int n) {
@@ -466,6 +434,21 @@ public class Cryptography {
             suma += i;
         }
         return suma;
+    }
+
+    public String keyDuplicator(String text, String key) {
+        int diff = 0;
+        //sprawdzam czy text jawny jest dluzszy od klucza, jezeli tak to obliczam roznice
+        if (text.length() > key.length()) {
+            diff = text.length() - key.length();
+        }
+        // petla dodajaca tyle liter do klucza tyle co wynosi roznica ich dlugosci
+        StringBuilder keyBuilder = new StringBuilder(key);
+        for (int i = 0; i < diff; i++) {
+            keyBuilder.append(keyBuilder.charAt(i));
+        }
+
+        return keyBuilder.toString();
     }
 }
 
