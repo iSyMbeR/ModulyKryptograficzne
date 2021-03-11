@@ -128,7 +128,7 @@ public class Cryptography {
     }
 
     public String przestawienieMacierzowe2aDecryption(String text, String key) {
-        decryptedText="";
+        decryptedText = "";
         String[] tmpKey = key.split("-");
         int[] intKey = new int[tmpKey.length];
 
@@ -400,6 +400,25 @@ public class Cryptography {
         return decryptedText;
     }
 
+    //szyfrowanie: c=(a+k) mod n
+    public String caesarEncryption(String text, int key) {
+        text = text.toUpperCase();
+        StringBuilder encryptedTextBuilder = new StringBuilder();
+        int firstLetter = 65;
+        int lastLetter = 90;
+        int tmpValue;
+        for (int i = 0; i < text.length(); i++) {
+            //jezeli wieksze od Z to
+            if (text.charAt(i) + key > lastLetter){
+                tmpValue = text.charAt(i) + key; // y = 89 -> 89 + 3 =  92
+                tmpValue = tmpValue - lastLetter; // 92 - 90 = 2
+                tmpValue = firstLetter + tmpValue - 1; //65 + 2= 67 - 1 = 66
+                encryptedTextBuilder.append((char)(tmpValue));
+            } else
+            encryptedTextBuilder.append((char)(text.charAt(i) + key));
+        }
+        return encryptedTextBuilder.toString();
+    }
 
     public String vigenereEncryption(String text, String key) {
         //sprawdzam czy text jawny jest dluzszy od klucza, jezeli tak to duplikuje klucz
@@ -409,7 +428,7 @@ public class Cryptography {
 
         StringBuilder encryptedTextBuilder = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
-            encryptedTextBuilder.append((char)(firstLetter + ((text.charAt(i)) + key.charAt(i)) % 26));
+            encryptedTextBuilder.append((char) (firstLetter + ((text.charAt(i)) + key.charAt(i)) % 26));
         }
         return encryptedTextBuilder.toString();
     }
@@ -422,7 +441,7 @@ public class Cryptography {
 
         StringBuilder encryptedTextBuilder = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
-            encryptedTextBuilder.append((char)(firstLetter + ((text.charAt(i)) - key.charAt(i) + 26) % 26));
+            encryptedTextBuilder.append((char) (firstLetter + ((text.charAt(i)) - key.charAt(i) + 26) % 26));
         }
 
         return encryptedTextBuilder.toString();
