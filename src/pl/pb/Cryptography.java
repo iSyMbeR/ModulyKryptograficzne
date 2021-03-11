@@ -420,6 +420,25 @@ public class Cryptography {
         return encryptedTextBuilder.toString();
     }
 
+    public String caesarDecryption(String text, int key) {
+        text = text.toUpperCase();
+        StringBuilder encryptedTextBuilder = new StringBuilder();
+        int firstLetter = 65;
+        int lastLetter = 90;
+        int tmpValue;
+        for (int i = 0; i < text.length(); i++) {
+            //jezeli mniejsze od A to
+            if (text.charAt(i) - key < firstLetter){
+                tmpValue = text.charAt(i) - key; // 66 - 3 = 63
+                tmpValue = firstLetter - tmpValue; // 65 - 63 = 2
+                tmpValue = lastLetter - tmpValue + 1; // 90 - 2 = 89
+                encryptedTextBuilder.append((char)(tmpValue));
+            } else
+                encryptedTextBuilder.append((char)(text.charAt(i) - key));
+        }
+        return encryptedTextBuilder.toString();
+    }
+
     public String vigenereEncryption(String text, String key) {
         //sprawdzam czy text jawny jest dluzszy od klucza, jezeli tak to duplikuje klucz
         key = keyDuplicator(text, key).toUpperCase();

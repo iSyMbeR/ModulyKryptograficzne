@@ -57,12 +57,12 @@ public class Main {
         System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
 
         //Zad 4. Cezar
-        text = "CRYPTOGRAPHY";
+        text = "POLITECHNIKA";
         intKey = 3;
 
-        System.out.println("\u001B[32m" + "3a. Szyfrowanie cezara (Caesar cipher)\nText: " + text + "\nKey: " + intKey + "\u001B[0m");
+        System.out.println("\u001B[32m" + "Zad 4. Szyfrowanie cezara (Caesar cipher)3a\nText: " + text + "\nKey: " + intKey + "\u001B[0m");
         encryptedText = cryptography.caesarEncryption(text, intKey);
-        //decryptedText = cryptography.przestawienieMacierzowe2cDecryption(encryptedText, key);
+        decryptedText = cryptography.caesarDecryption(encryptedText, intKey);
         System.out.println("Text '" + text + "' po zaszyfrowaniu wyglada tak : " + encryptedText);
         System.out.println("\nText '" + encryptedText + "' po odszyfrowaniu wyglada tak : " + decryptedText);
         System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
@@ -71,7 +71,7 @@ public class Main {
         // Zad 5. Zaimplementuj kryptosystem bazuj ˛acy na tablicy Vigenere’a (1 punkt).
         text = "POLITECHNIKA";
         key = "DZIEKAN";
-        System.out.println("\u001B[32m" + "4. Szyfrowanie Vigenere’a\nText: " + text + "\nKey: " + key + "\u001B[0m");
+        System.out.println("\u001B[32m" + "Zad 5. Szyfrowanie Vigenere’a\nText: " + text + "\nKey: " + key + "\u001B[0m");
         encryptedText = cryptography.vigenereEncryption(text, key);
         decryptedText = cryptography.vigenereDecryption(encryptedText, key);
         System.out.println("Text '" + text + "' po zaszyfrowaniu wyglada tak : EK(M) = " + encryptedText);
