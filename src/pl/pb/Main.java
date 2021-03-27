@@ -82,23 +82,19 @@ public class Main {
 
         //ZAD 1
         System.out.println("Zadanie 1");
-
-        String key = LFSR.generator("1,2,4","1001");
+        String key = LFSR.generator("4","1001");
         System.out.println(key);
         System.out.println();
-
         // ZAD 2
         System.out.println("Zadanie 2");
-        System.out.println(SynchronousStreamCipher.encrypt("1,3,4","1001","1101"));
-        System.out.println(SynchronousStreamCipher.encrypt("1,3,4","1001","0110"));
+        System.out.println(SynchronousStreamCipher.encrypt("1,2,4","1111","1001"));
+        System.out.println(SynchronousStreamCipher.encrypt("1,2,4","1111","0100"));
         System.out.println();
-
         // ZAD 3
         System.out.println("Zadanie 3");
         System.out.println(CiphertextAutokey.encrypt("1,3,4","1001","1101"));
         System.out.println(CiphertextAutokey.encrypt("1,3,4","1001","0010"));
         System.out.println(CiphertextAutokey.decrypt("1,3,4","1001","0010"));
-
     }
 
 }

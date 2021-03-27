@@ -30,19 +30,11 @@ public class CiphertextAutokey {
         String[] separatedPolynomial;
         separatedPolynomial = polynomial.split(",");
         //stopien wielomianu
-        int degreeOfPolynomial = Integer.parseInt(separatedPolynomial[separatedPolynomial.length - 1]);
+        int degreeOfPolynomial = polynomial.charAt(polynomial.length() - 1) % 48;
+
         int[] polyBinary = new int[degreeOfPolynomial];
-        int index = 0;
-        for (int i = 0; i < degreeOfPolynomial; i++) {
-            try {
-                if ((i + 1) == Integer.parseInt(separatedPolynomial[index]) && (!separatedPolynomial[index].isBlank())) {
-                    polyBinary[i] = 1;
-                    index++;
-                } else polyBinary[i] = 0;
-            } catch (ArrayIndexOutOfBoundsException ignored) {
-                polyBinary[i] = 0;
-            }
-        }
+        BinaryConverter.polyIntArrayToBinary(polynomial, degreeOfPolynomial, polyBinary);
+
         //tablica przechowuje indeksy jedynek znajdujacych sie w seedzie
         List<Integer> listWithIndexesSeed = new ArrayList<>();
         for (int i = 0; i < seed.length; i++) {
@@ -51,9 +43,7 @@ public class CiphertextAutokey {
             }
         }
         for (int i = 0; i < intText.length; i++) {
-
             result[i] = (polyBinary[0] ^ intText[i]);
-
             int tmpP = 0;
             //xorowanie wielomiana
             for (Integer integer : listWithIndexesSeed) {
@@ -71,6 +61,4 @@ public class CiphertextAutokey {
         }
         return Arrays.toString(result);
     }
-
-
 }

@@ -1,6 +1,8 @@
 package pl.pb;
 
 
+import jdk.swing.interop.SwingInterOpUtils;
+
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -84,7 +86,9 @@ public class Cryptography {
         currentRow = 0;
         for (int i = 0; i < column; i++) {
             for (int j = 0; j < key; j++) {
-                if (currentRow == 0 || currentRow == key - 1) direction = !direction;
+                if (currentRow == 0 || currentRow == key - 1) {
+                    direction = !direction;
+                }
                 decryptedText += a[j][i];
                 if (direction) currentRow++;
                 else currentRow--;
@@ -171,6 +175,7 @@ public class Cryptography {
                 }
             }
         }
+
         return decryptedText;
     }
 
@@ -316,6 +321,7 @@ public class Cryptography {
         int textSizeCounter = 0;
         boolean textSizeChecker = false;
         int index = 0;
+
         for (int i = 0; i < column; i++) {
             if (textSizeChecker) {
                 break;
@@ -386,6 +392,7 @@ public class Cryptography {
         for (int i = 0; i < column; i++) {
             for (int j = 0; j < row; j++) {
                 textCharArray[j][arrayOfIndexes[index]] = text.charAt(index2++);
+
             }
             index++;
         }
@@ -400,7 +407,6 @@ public class Cryptography {
         return decryptedText;
     }
 
-    //szyfrowanie: c=(a+k) mod n
     public String caesarEncryption(String text, int key) {
         text = text.toUpperCase();
         StringBuilder encryptedTextBuilder = new StringBuilder();
@@ -409,13 +415,13 @@ public class Cryptography {
         int tmpValue;
         for (int i = 0; i < text.length(); i++) {
             //jezeli wieksze od Z to
-            if (text.charAt(i) + key > lastLetter){
+            if (text.charAt(i) + key > lastLetter) {
                 tmpValue = text.charAt(i) + key; // y = 89 -> 89 + 3 =  92
                 tmpValue = tmpValue - lastLetter; // 92 - 90 = 2
                 tmpValue = firstLetter + tmpValue - 1; //65 + 2= 67 - 1 = 66
-                encryptedTextBuilder.append((char)(tmpValue));
+                encryptedTextBuilder.append((char) (tmpValue));
             } else
-            encryptedTextBuilder.append((char)(text.charAt(i) + key));
+                encryptedTextBuilder.append((char) (text.charAt(i) + key));
         }
         return encryptedTextBuilder.toString();
     }
@@ -428,13 +434,13 @@ public class Cryptography {
         int tmpValue;
         for (int i = 0; i < text.length(); i++) {
             //jezeli mniejsze od A to
-            if (text.charAt(i) - key < firstLetter){
+            if (text.charAt(i) - key < firstLetter) {
                 tmpValue = text.charAt(i) - key; // 66 - 3 = 63
                 tmpValue = firstLetter - tmpValue; // 65 - 63 = 2
                 tmpValue = lastLetter - tmpValue + 1; // 90 - 2 = 89
-                encryptedTextBuilder.append((char)(tmpValue));
+                encryptedTextBuilder.append((char) (tmpValue));
             } else
-                encryptedTextBuilder.append((char)(text.charAt(i) - key));
+                encryptedTextBuilder.append((char) (text.charAt(i) - key));
         }
         return encryptedTextBuilder.toString();
     }
